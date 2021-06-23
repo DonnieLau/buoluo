@@ -1,0 +1,145 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>菠萝安全中心</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+        content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="stylesheet" href="{% static "css/font.css" %}">
+    <link rel="stylesheet" href="{% static "css/xadmin.css" %}">
+    <script type="text/javascript" src="{% static 'js/jquery.js' %} "></script>
+    <script src="{% static "lib/layui/layui.js" %}" charset="utf-8"></script>
+    <script type="text/javascript" src="{% static "js/xadmin.js" %}"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="logo">
+            <a href="">菠萝安全中心</a>
+        </div>
+
+        <div class="left_open">
+            <i title="展开左侧栏" class="iconfont">&#xe699;</i>
+        </div>
+
+        <ul class="layui-nav right" lay-filter="">
+            <li class="layui-nav-item">
+                <a href="javascript:;">{{ user }}</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="{% url "index_logout" %}">退出</a></dd>
+                </dl>
+            </li>
+        </ul>
+    </div>
+
+    <div class="left-nav">
+        <div id="side-nav">
+            <ul id="nav">
+                <li>
+                    <a href="#">
+                        <i class="iconfont">&#xe6f4;</i>
+                        <cite>代码审计</cite>
+                        <i class="iconfont nav_right">&#xe697;</i>
+                    </a>
+                    <ul class="sub-menu">
+                        {% if perms.audit.upload_code_and_scan %}
+                        <li>
+                            <a _href="{% url "audit_scan" %}">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite>项目扫描</cite>
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% if perms.audit.display_projects %}
+                        <li>
+                            <a _href="{% url "audit_display_project" %}">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite>项目情况</cite>
+                            </a>
+                        </li>
+                        {% endif %}
+                        <!-- {% if perms.audit.chandao_index %} -->
+                        <!-- <li> -->
+                        <!-- <a _href="{% url "audit_chandao" %}"> -->
+                        <!-- <i class="iconfont">&#xe6a7;</i> -->
+                        <!-- <cite>禅道</cite> -->
+                        <!-- </a> -->
+                        <!-- </li> -->
+                        <!-- {% endif %} -->
+                    </ul>
+                </li>
+
+                <li style="display: none;">
+                    <a href="#">
+                        <i class="iconfont">&#xe6f4;</i>
+                        <cite>安全扫描</cite>
+                        <i class="iconfont nav_right">&#xe697;</i>
+                    </a>
+                    <ul class="sub-menu">
+                        {% if perms.pentest.proxy_index %}
+                        <li>
+                            <a _href="{% url "proxy" %}">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite>代理</cite>
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% if perms.pentest.display_sqli %}
+                        <li>
+                            <a _href="{% url "passive_sqli" %}">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite>被动注入</cite>
+                            </a>
+                        </li>
+                        {% endif %}
+
+                        <li>
+                            <a _href="{% url "passive_sqli" %}">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite>XSS扫描</cite>
+                            </a>
+                        </li>
+                        <li>
+                            <a _href="{% url "passive_sqli" %}">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite>子域名</cite>
+                            </a>
+                        </li>
+                        <li>
+                            <a _href="{% url "passive_sqli" %}">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite>越权</cite>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="page-content">
+        <div class="layui-tab tab" lay-filter="xbs_tab" lay-allowclose="false">
+            <ul class="layui-tab-title">
+                <li class="home"><i class="layui-icon">&#xe68e;</i>仪表盘</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <iframe src='/overview' frameborder="0" scrolling="yes" class="x-iframe"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-content-bg"></div>
+
+    <div class="footer">
+        <div class="copyright">随便用用，乱动出错我不管</div>
+    </div>
+</body>
+
+</html>
