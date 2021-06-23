@@ -1,12 +1,3 @@
-# 般若安全中心
-
-**般若的正确读音是bore，项目名就不改啊**
-## 文章
-
-https://www.freebuf.com/sectool/176414.html
-
-https://www.freebuf.com/column/221910.html
-
 ## fortify设置
 由于fortify模板一个漏洞类别默认输出漏洞数目为5，需要将其设置为无限输出。
 模板文件可在fortify目录下Core/config/reports找到
@@ -14,9 +5,7 @@ https://www.freebuf.com/column/221910.html
 
 
 ## 安装教程
-**该系统环境是python3.6运行的，3.7会显示错误。说一下注意事项，我这个dockerfile里面没有安装mysql，因为centos7的一些问题，mysql我是设置了外连，也就是你只需要在config.json设置MySQL的主机，账号，密码就可以直接使用**
-
-演示视频：https://www.bilibili.com/video/av82354379
+**该系统环境是python3.6运行的，3.7会显示错误。说一下注意事项，这个dockerfile里面没有安装mysql，因为centos7的一些问题，mysql我是设置了外连，也就是你只需要在config.json设置MySQL的主机，账号，密码就可以直接使用**
 
 ```
 安装步骤
