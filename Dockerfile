@@ -25,4 +25,4 @@ RUN ln -s /opt/sqlmap/sqlmapapi.py /usr/bin/sqlmapapi &&  ln -s /opt/sqlmap/sqlm
 # config.json
 COPY buoluo/config.json /opt/buoluo/buoluo/
 
-#ENTRYPOINT redis-server & && cd /opt/ && python3 manage.py celery -A buoluo worker  -l info --beat & && python3 manage.py runserver 0.0.0.0:8000#
+ENTRYPOINT redis-server & && cd /opt/ && python3 manage.py celery -A buoluo worker -l info --beat & && python3 manage.py runserver 0.0.0.0:8000#
