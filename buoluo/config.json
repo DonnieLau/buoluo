@@ -1,9 +1,9 @@
 {
   "setting": {
     "MYSQL": {
-      "MYSQL_HOST": "127.0.0.1",
+      "MYSQL_HOST": "172.16.107.36",
       "MYSQL_PORT": "3306",
-      "MYSQL_DATABASE": "boluo",
+      "MYSQL_DATABASE": "buoluo",
       "MYSQL_USER": "root",
       "MYSQL_PASSWORD": "20201116"
     },
@@ -45,8 +45,8 @@
       ]
     },
     "FORTIFY": {
-      "fortify_path": "data/fortify/",
-      "report_path": "data/fortify/report/",
+      "fortify_path": "/data/fortify/",
+      "report_path": "/data/fortify/report/",
       "filter_title": [
         "Injection",
         "Cross-Site Scripting"
