@@ -2,7 +2,7 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/data/fortify/common-module-project-youyou-2.1.6" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/fortify/common-module-project-youyou-2.1.6" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/data/fortify/emotion-engine-dal-master" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/data/fortify/x-chat-master" vcs="Git" />
   </component>
 </project>

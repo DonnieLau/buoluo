@@ -21,7 +21,7 @@ RUN pip3 install typing
 RUN cd /opt && git clone https://github.com/DonnieLau/buoluo.git
 RUN service mysql start && mysql -e "create  database buoluo DEFAULT CHARSET utf8 COLLATE utf8_general_ci; " && mysql -e "set password for 'root'@'localhost' =password('123456');"
 RUN service mysql start && cd /opt/buoluo && python3 manage.py makemigrations && python3 manage.py migrate
-RUN mkdir /data && mkdir /data/fortify && mkdir /data/fortify/report && chmod 777 /data -R
+RUN mkdir /data && mkdir /data/fortify && mkdir /data/fortify/report && chmod 777 -R /data
 #这个是fortify的运行程序
 RUN chmod 777 -R /opt/fortify_linux/ && ln -s /opt/fortify_linux/bin/sourceanalyzer /usr/local/bin/sourceanalyzer && ln -s /opt/fortify_linux/bin/ReportGenerator /usr/local/bin/ReportGenerator
 

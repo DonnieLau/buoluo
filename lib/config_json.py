@@ -31,8 +31,8 @@ def load_config(parm):
 
 
 # fortify
-fortify_path = os.path.abspath(os.path.dirname(os.getcwd())) + load_config('fortify_path')
-report_path = os.path.abspath(os.path.dirname(os.getcwd())) + load_config('report_path')
+fortify_path = load_config('fortify_path')
+report_path = load_config('report_path')
 filter_title = load_config('filter_title')
 
 # MYSQL

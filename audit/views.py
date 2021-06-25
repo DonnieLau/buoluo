@@ -191,7 +191,7 @@ def scan(request):
                     pass
         elif (t == "2"):
             git_api()
-            return JsonResponse({"code": 1001, "msg": "开始扫描"})
+            return JsonResponse({"code": 1000, "msg": "开始扫描"})
         elif (t == "3"):
             svnaddress = request.POST.get("svn_address")
             svnaccount = request.POST.get("svn_username")
