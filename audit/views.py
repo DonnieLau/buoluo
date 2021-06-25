@@ -167,22 +167,26 @@ def scan(request):
     if request.method == 'POST':
         t = request.POST.get('type')  # 1为git,2为git-list,3为SVN,4为上传
         if (t == "1"):
-            gitproname = request.POST.get("git_projectname")
             gitaddress = request.POST.get("git_address")
+            gitbranch = request.POST.get("git_branch")
             gitaccount = request.POST.get("git_username")
             gitpwd = request.POST.get("git_password")
-            if len(gitaccount) == 0 and len(gitpwd) == 0:
-                push.delay(gitproname=gitproname, gitaddress=gitaddress)
-                return JsonResponse({"code": 1001, "msg": "开始扫描"})
+            if len(gitaddress.strip()) == 0 and len(gitbranch.strip()) == 0:
+                return JsonResponse({"status": 0, "msg": "请输入地址和分支！"})
+            elif len(gitaccount.strip()) == 0 and len(gitpwd.strip()) == 0:
+                return JsonResponse({"status": 0, "msg": "请输入账号和密码！"})
             else:
-                if "https://" in gitaddress:
+                gitaddname = gitaddress.replace('.git', '')
+                if "https://" in gitaddname:
                     tmp = "https://" + gitaccount.replace("@", "%40") + ":" + gitpwd + "@"
-                    address = gitaddress.replace("https://", tmp)
-                    push.delay(gitaddress=address)
-                elif "http://" in gitaddress:
+                    address = gitaddname.replace("https://", tmp)
+                    push.delay(gitaddress=address, gitbranch=gitbranch)
+                    return JsonResponse({"code": 1000, "msg": "开始扫描"})
+                elif "http://" in gitaddname:
                     tmp = "http://" + gitaccount.replace("@", "%40") + ":" + gitpwd + "@"
-                    address = gitaddress.replace('http://', tmp)
-                    push.delay(gitaddress=address)
+                    address = gitaddname.replace('http://', tmp)
+                    push.delay(gitaddress=address, gitbranch=gitbranch)
+                    return JsonResponse({"code": 1000, "msg": "开始扫描"})
                 else:
                     pass
         elif (t == "2"):

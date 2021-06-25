@@ -17,7 +17,6 @@ def save_config(**kwargs):
         print(i.split('.')[-1])
     with open(CONFIG_PATH, "w") as f:
         f.write(config.to_json())
-    #    print("加载入文件完成...")
 
 
 def load_config(parm):
@@ -32,8 +31,8 @@ def load_config(parm):
 
 
 # fortify
-fortify_path = load_config('fortify_path')
-report_path = load_config('report_path')
+fortify_path = os.path.abspath(os.path.dirname(os.getcwd())) + load_config('fortify_path')
+report_path = os.path.abspath(os.path.dirname(os.getcwd())) + load_config('report_path')
 filter_title = load_config('filter_title')
 
 # MYSQL

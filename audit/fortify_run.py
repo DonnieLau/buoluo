@@ -1,4 +1,4 @@
-import subprocess, os
+import subprocess
 from xml.dom.minidom import parse
 import xml.dom.minidom
 import random
@@ -67,7 +67,6 @@ def run(myfile, token):
     build = 'sourceanalyzer  -b ' + myfile + ' -Xmx1200M -Xms600M -Xss24M -source 1.8 -machine-output ' + source_path
     scan = 'sourceanalyzer  -b ' + myfile + ' -scan -format fpr -f ' + fortify_fpr + ' -machine-output'
     report = 'ReportGenerator -format xml -f ' + fortify_xml + ' -source ' + fortify_fpr + ' -template DeveloperWorkbook.xml'
-    print("del_fprgugu:" + del_fpr)
     # subprocess.check_call(del_fpr, shell=True)
     # subprocess.check_call(build, shell=True)
     # subprocess.check_call(scan, shell=True)
@@ -104,15 +103,15 @@ def git_api():
 
 
 @task
-def push(gitproname='', gitaddress='', svnaddress='', name='', type=1, svnaccount='', svnpwd=''):
+def push(gitbranch='', gitaddress='', svnaddress='', name='', type=1, svnaccount='', svnpwd=''):
     token = ''.join(random.sample(string.ascii_letters + string.digits, 32))
+    gitaddname = gitaddress.split('/')[-1].replace('.git', '')
+    myfile = gitaddname + '-' + gitbranch.replace('/', '-')
     if len(gitaddress) > 0:
-        gitaddname = gitaddress.split('/')[-1].replace('.git', '')
-        myfile = gitaddname + '-' + gitproname
         proj_info.objects.create(name=myfile, git=gitaddress, token=token, type=type)
         try:
-            cmd = 'git clone ' + gitaddress.strip() + ' ' + fortify_path + myfile
-            # subprocess.check_call(cmd, shell=True)
+            cmd = 'git clone -b ' + gitbranch + gitaddress.strip() + ' ' + fortify_path + myfile
+            subprocess.check_call(cmd, shell=True)
             pass
         except subprocess.CalledProcessError as err:
             try:

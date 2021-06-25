@@ -4,8 +4,8 @@ import datetime
 
 class proj_info(models.Model):
     name = models.CharField(max_length=100)  # 项目名字
-    git = models.CharField(max_length=100, null=True, blank=True)  # git地址
-    total = models.CharField(max_length=10, default='0', null=True)  # 该项目漏洞总数
+    git = models.CharField(max_length=200, null=True, blank=True)  # git地址
+    total = models.CharField(max_length=100, default='0', null=True)  # 该项目漏洞总数
     token = models.CharField(max_length=100, null=True, blank=True)  # 项目标识
     status = models.IntegerField(default=1)  # 确定扫描是否完成
     type = models.IntegerField(blank=True, null=True)  # 项目类型，1为git，2为svn，3为上传

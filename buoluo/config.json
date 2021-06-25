@@ -45,8 +45,8 @@
       ]
     },
     "FORTIFY": {
-      "fortify_path": "/data/fortify/",
-      "report_path": "/data/fortify/report/",
+      "fortify_path": "/fortify/",
+      "report_path": "/fortify/report/",
       "filter_title": [
         "Injection",
         "Cross-Site Scripting"

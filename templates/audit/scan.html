@@ -7,7 +7,8 @@
     <title>项目情况</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi"/>
+    <meta name="viewport"
+          content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi"/>
     <link rel="stylesheet" href={% static "css/font.css" %}>
     <link rel="stylesheet" href={% static "css/xadmin.css" %}>
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
@@ -31,9 +32,12 @@
     <div class="layui-row layui-col-space1">
         <div class="layui-col-xs6">
             <div class="layui-card">
-                <div class="layui-card-header">GIT项目扫描</div>
+                <div class="layui-card-header">
+                    GIT项目扫描
+                </div>
+
                 <div class="layui-card-body" style="height: 300px;">
-                    <form class="layui-form" action="" lay-filter="component-form-group" method="post">
+                    <form class="layui-form" action="" lay-filter="component-form-group" method="post" id="gitForm">
                         <div class="layui-form-item">
                             <div class="layui-input-block" style="display: none">
                                 <input name="type" value="1" type="hidden" class="layui-input">
@@ -48,7 +52,7 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label">git分支</label>
                             <div class="layui-input-block">
-                                <input type="text" name="git_projectname" lay-verify="title" autocomplete="off"
+                                <input type="text" name="git_branch" lay-verify="title" autocomplete="off"
                                        placeholder="分支名称" class="layui-input">
                             </div>
                         </div>
@@ -57,7 +61,7 @@
                             <label class="layui-form-label">git账号</label>
                             <div class="layui-input-block">
                                 <input type="text" name="git_username" lay-verify="title" autocomplete="off"
-                                       placeholder="账号可空" class="layui-input">
+                                       placeholder="请输入账号" class="layui-input">
                             </div>
                         </div>
 
@@ -65,7 +69,7 @@
                             <label class="layui-form-label">git密码</label>
                             <div class="layui-input-block">
                                 <input type="text" name="git_password" lay-verify="title" autocomplete="off"
-                                       placeholder="密码可空" class="layui-input">
+                                       placeholder="请输入密码" class="layui-input">
                             </div>
                         </div>
 
@@ -77,9 +81,12 @@
             </div>
         </div>
 
-        <div class="layui-col-xs6">
+        <div class="layui-col-xs6" style="display: none">
             <div class="layui-card">
-                <div class="layui-card-header">GIT-API扫描</div>
+                <div class="layui-card-header">
+                    GIT-API扫描
+                </div>
+
                 <div class="layui-card-body" style="height: 300px;">
                     <form class="layui-form" action="" lay-filter="component-form-group" method="post">
                         <div class="layui-form-item">
@@ -105,7 +112,6 @@
                 </div>
             </div>
         </div>
-    </div>
 </div>
 
 <div class="layui-fluid" id="p2" style="display: none">
@@ -165,10 +171,7 @@
                 </div>
             </div>
         </div>
-
     </div>
-
-
 </div>
 </div>
 
@@ -184,17 +187,20 @@
                 async: true,
                 data: {
                     type: data.field.type,
-                    git_projectname: data.field.git_projectname,
+                    git_branch: data.field.git_branch,
                     git_address: data.field.git_address,
                     git_username: data.field.git_username,
                     git_password: data.field.git_password
                 },
                 success: function (text) {
                     if (text.code == 1000) {
-                        layer.msg(text.msg)
-                    } else {
                         layer.msg(text.msg, {
                             icon: 1
+                        });
+                        document.getElementById('gitForm').reset();
+                    } else {
+                        layer.msg(text.msg, {
+                            icon: 2
                         });
                     }
                 }
