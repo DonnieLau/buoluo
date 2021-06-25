@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponseRedirect
+from django.shortcuts import render, HttpResponseRedirect, HttpResponse
 import time, datetime
 from audit.models import *
 from django.db.models import Q
@@ -120,6 +120,7 @@ def login(request):
     if request.method == 'POST':
         username = request.POST.get("username")
         password = request.POST.get("password")
+
         user = auth.authenticate(username=username, password=password)
 
         if user is not None:
@@ -128,10 +129,21 @@ def login(request):
         else:
             err_msg = "账号或者密码错误"
             return render(request, 'index/login.html', locals())
-
-
     else:
         return render(request, 'index/login.html', locals())
+
+
+def register_action(request):
+    u_name = request.GET['username']
+    u_word = request.GET['password']
+    # 开始联通数据库，检验用户和密码
+    from django.contrib.auth.models import User
+    try:
+        user = User.objects.create_user(username=u_name, password=u_word)
+        user.save()
+        return HttpResponse('注册成功！')
+    except:
+        return HttpResponse('注册失败！用户名已存在！')
 
 
 @login_required

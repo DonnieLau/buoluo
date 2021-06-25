@@ -18,7 +18,7 @@ RUN pip3 install mitmproxy==0.18.2
 RUN pip3 install django-celery redis pymysql
 RUN pip3 install typing
 
-RUN cd /opt && git clone https://github.com/yingshang/buoluo.git
+RUN cd /opt && git clone https://github.com/DonnieLau/buoluo.git
 RUN service mysql start && mysql -e "create  database buoluo DEFAULT CHARSET utf8 COLLATE utf8_general_ci; " && mysql -e "set password for 'root'@'localhost' =password('123456');"
 RUN service mysql start && cd /opt/buoluo && python3 manage.py makemigrations && python3 manage.py migrate
 RUN mkdir /data && mkdir /data/fortify && mkdir /data/fortify/report && chmod 777 /data -R

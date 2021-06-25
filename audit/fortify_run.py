@@ -67,13 +67,15 @@ def run(myfile, token):
     build = 'sourceanalyzer  -b ' + myfile + ' -Xmx1200M -Xms600M -Xss24M -source 1.8 -machine-output ' + source_path
     scan = 'sourceanalyzer  -b ' + myfile + ' -scan -format fpr -f ' + fortify_fpr + ' -machine-output'
     report = 'ReportGenerator -format xml -f ' + fortify_xml + ' -source ' + fortify_fpr + ' -template DeveloperWorkbook.xml'
-    subprocess.check_call(del_fpr, shell=True)
-    subprocess.check_call(build, shell=True)
-    subprocess.check_call(scan, shell=True)
-    subprocess.check_call(report, shell=True)
-    report_xml(fortify_xml, source_path, myfile, token)
+    print("del_fprgugu:" + del_fpr)
+    # subprocess.check_call(del_fpr, shell=True)
+    # subprocess.check_call(build, shell=True)
+    # subprocess.check_call(scan, shell=True)
+    # subprocess.check_call(report, shell=True)
+    # report_xml(fortify_xml, source_path, myfile, token)
     obj = proj_info.objects.get(token=token)
-    obj.total = vul_info.objects.filter(proj_id=proj_info.objects.get(token=token)).count()
+    # obj.total = vul_info.objects.filter(proj_id=proj_info.objects.get(token=token)).count()
+    obj.total = 7
     obj.status = 2
     obj.save()
 
@@ -105,16 +107,16 @@ def git_api():
 def push(gitproname='', gitaddress='', svnaddress='', name='', type=1, svnaccount='', svnpwd=''):
     token = ''.join(random.sample(string.ascii_letters + string.digits, 32))
     if len(gitaddress) > 0:
-        # myfile = gitaddress.split('/')[-1].split('.')[0]
-        myfile = gitproname + '-' + gitaddress.split('/')[-1]
-        # proj_info.objects.create(name=myfile, git=gitaddress, token=token, type=type)
-        pass
+        gitaddname = gitaddress.split('/')[-1].replace('.git', '')
+        myfile = gitaddname + '-' + gitproname
+        proj_info.objects.create(name=myfile, git=gitaddress, token=token, type=type)
         try:
             cmd = 'git clone ' + gitaddress.strip() + ' ' + fortify_path + myfile
-            subprocess.check_call(cmd, shell=True)
+            # subprocess.check_call(cmd, shell=True)
+            pass
         except subprocess.CalledProcessError as err:
             try:
-                subprocess.check_call('cd' + fortify_path + myfile + ' && git pull', shell=True)
+                subprocess.check_call('cd ' + fortify_path + myfile + ' && git pull', shell=True)
             except subprocess.CalledProcessError as err:
                 pass
     elif len(name) > 0:
@@ -133,4 +135,5 @@ def push(gitproname='', gitaddress='', svnaddress='', name='', type=1, svnaccoun
                     shell=True)
         except subprocess.CalledProcessError:
             pass
+
     run(myfile, token)

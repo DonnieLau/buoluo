@@ -16,8 +16,8 @@
     <script type="text/javascript" src={% static "js/xadmin.js" %}></script>
     <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
     <!--[if lt IE 9]>
-      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
-      <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
 
@@ -31,7 +31,6 @@
             <a type="button" href="{% url "index_overview" %}?t=week" class="layui-btn" id="week">周报</a>
             <a type="button" href="{% url "index_overview" %}?t=month" class="layui-btn" id="month">月报</a>
             <a type="button" href="{% url "index_overview" %}?t=year" class="layui-btn" id="week">年报</a>
-
         </form>
     </div>
 
@@ -42,13 +41,10 @@
         <div class="layui-col-xs4">
             <div id="Vulnerability_type" style="height:400px;"></div>
         </div>
-
         <div class="layui-col-xs4">
             <div id="Vulnerability_trend" style="height:400px;"></div>
         </div>
     </div>
-
-
 </div>
 
 
@@ -111,7 +107,6 @@
     };
     var vul_distributing = echarts.init(document.getElementById('Vulnerability_trend'));
     vul_distributing.setOption(option);
-
 </script>
 
 <script>
@@ -168,9 +163,7 @@
             }
         ]
     };
-
     var vul_distributing = echarts.init(document.getElementById('Vulnerability_type'));
     vul_distributing.setOption(option);
-
 </script>
 </body>

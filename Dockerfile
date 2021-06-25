@@ -9,7 +9,7 @@ RUN yum install epel-release -y
 RUN yum install -y git wget python36 gcc python36-libs python36-tools python36-devel zlib-devel rpm-build openssl-devel python redis
 
 # django
-RUN cd /opt && git clone https://github.com/yingshang/buoluo.git
+RUN cd /opt && git clone https://github.com/DonnieLau/buoluo.git
 RUN cd /opt/buoluo && pip3 install -r requirements.txt
 RUN cd /opt/buoluo && python3 manage.py makemigrations && python3 manage.py migrate
 

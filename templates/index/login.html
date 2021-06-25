@@ -3,85 +3,70 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>安全中心登录页面</title>
+    <title>菠萝安全中心登录页面</title>
 
     <link href="{% static "css/login.css" %}" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
     <script src="{% static "js/verificationNumbers.js" %}" tppabs="static/js/verificationNumbers.js"></script>
-    <style>
-        .J_codeimg {
-            z-index: -1;
-            position: absolute;
-        }
-    </style>
 
-    <script>
-        //$(document).ready(function() {
-        //  //验证码
-        //  createCode();
-        //});
-    </script>
 </head>
 <body>
 <div class="login-box" id="demo">
     <div class="input-content">
         <div class="login_tit">
             <div>
-                安全中心
+                菠萝安全中心
             </div>
-
-<p>{{ err_msg }}</p>
-
+            <p style="color: #bce8f1">{{ err_msg }}</p>
         </div>
+
         <form action="{% url "index_login" %}" method="post">
             {% csrf_token %}
             <p class="p user_icon">
-                <input type="text" name="username" placeholder="账号" autocomplete="off" class="login_txtbx">
+                <input type="text" name="username" placeholder="账号" autocomplete="new-password" class="login_txtbx">
             </p>
             <p class="p pwd_icon">
-                <input type="password" name="password" placeholder="密码" autocomplete="off" class="login_txtbx">
+                <input type="password" name="password" placeholder="密码" autocomplete="new-password" class="login_txtbx">
             </p>
-            <!--
-          <div class="p val_icon">
-             <div class="checkcode">
-               <input type="text" id="J_codetext" placeholder="验证码" autocomplete="off" maxlength="4" class="login_txtbx">
-               <canvas class="J_codeimg" id="myCanvas" onclick="createCode()" onselectstart="return false">对不起，您的浏览器不支持canvas，请下载最新版浏览器!</canvas>
-             </div>
-             <a class="ver_btn" onclick="createCode();" onselectstart="return false">看不清，换一张</a>
-           </div>
-           -->
             <div class="signup">
-            <button class="gv">登录</button>
-
-                <!--
-                  <a class="gv" href="#" onclick="validate()">登录</a>
-      -->
+                <button type="submit" class="gv">登录</button>
+                <button type="button" class="gv" onclick="blregister()">注册</button>
             </div>
         </form>
     </div>
 
     <div class="canvaszz"></div>
     <canvas id="canvas"></canvas>
+
 </div>
 <script>
+    function blregister() {
+            var username = document.getElementsByName("username")[0].value;
+            var password = document.getElementsByName("password")[0].value;
+            $.get("/register_action/", {
+                "username": username,
+                "password": password
+            }, function (ret) {
+                alert(ret)
+            })
+    }
     //宇宙特效
     "use strict";
     var canvas = document.getElementById('canvas'),
         ctx = canvas.getContext('2d'),
         w = canvas.width = window.innerWidth,
         h = canvas.height = window.innerHeight,
-
         hue = 217,
         stars = [],
         count = 0,
         maxStars = 2500;//星星数量
 
-    var canvas2 = document.createElement('canvas'),
-        ctx2 = canvas2.getContext('2d');
+    var canvas2 = document.createElement('canvas'), ctx2 = canvas2.getContext('2d');
+
     canvas2.width = 100;
     canvas2.height = 100;
-    var half = canvas2.width / 2,
-        gradient2 = ctx2.createRadialGradient(half, half, 0, half, half, half);
+
+    var half = canvas2.width / 2, gradient2 = ctx2.createRadialGradient(half, half, 0, half, half, half);
     gradient2.addColorStop(0.025, '#CCC');
     gradient2.addColorStop(0.1, 'hsl(' + hue + ', 61%, 33%)');
     gradient2.addColorStop(0.25, 'hsl(' + hue + ', 64%, 6%)');
@@ -105,7 +90,6 @@
             max = min;
             min = hold;
         }
-
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
@@ -117,7 +101,6 @@
     }
 
     var Star = function () {
-
         this.orbitRadius = random(maxOrbit(w, h));
         this.radius = random(60, this.orbitRadius) / 18;
         //星星大小
@@ -161,12 +144,9 @@
         ctx.globalCompositeOperation = 'lighter';
         for (var i = 1, l = stars.length; i < l; i++) {
             stars[i].draw();
-        }
-        ;
-
+        };
         window.requestAnimationFrame(animation);
     }
-
     animation();
 </script>
 

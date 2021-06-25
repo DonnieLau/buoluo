@@ -172,8 +172,7 @@ def scan(request):
             gitaccount = request.POST.get("git_username")
             gitpwd = request.POST.get("git_password")
             if len(gitaccount) == 0 and len(gitpwd) == 0:
-                # push.delay(gitaddress=gitaddress)
-                push(gitproname=gitproname, gitaddress=gitaddress)
+                push.delay(gitproname=gitproname, gitaddress=gitaddress)
                 return JsonResponse({"code": 1001, "msg": "开始扫描"})
             else:
                 if "https://" in gitaddress:
@@ -188,7 +187,7 @@ def scan(request):
                     pass
         elif (t == "2"):
             git_api()
-            return JsonResponse({"code": 1001, "msg": "开始扫描!!!"})
+            return JsonResponse({"code": 1001, "msg": "开始扫描"})
         elif (t == "3"):
             svnaddress = request.POST.get("svn_address")
             svnaccount = request.POST.get("svn_username")

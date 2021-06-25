@@ -14,16 +14,13 @@ body {
 
 .login-box canvas {
     width: 100%;
-    height: auto /*榛樿鍏ㄥ睆鏄剧ず 鍙嚜宸辫缃珮搴�640px*/;
+    height: auto;
     display: inline-block;
-    vertical-align: baseline
-    position: absolute;
     z-index: -1;
 }
 
-.login-box .canvaszz { /*鐢ㄦ潵瑙ｅ喅瑙嗛鍙抽敭鑿滃崟锛岀敤浜庤棰戜笂闈㈢殑閬僵灞�*/
+.login-box .canvaszz {
     width: 100%;
-    background-image: url(../img/in_top_bj.png);
     height: 800px;
     position: absolute;
     z-index: 10;
@@ -49,7 +46,6 @@ body {
     display: inline-block;
     width: 90px;
     height: 1px;
-    background: url(../img/login-tit.png)
 }
 
 .tit-bg.left {
@@ -80,7 +76,6 @@ body {
 
 .login-box .signup a.gv {
     text-decoration: none;
-    background: url(../img/nav_gv.png) repeat 0px 0px;
     width: 130px;
     height: 43px;
     display: inline-block;
@@ -98,7 +93,6 @@ body {
 }
 
 .login-box .signup a.gv:hover {
-    background: url(../img/nav_gv.png) repeat 0px -43px;
     color: #1d7eb8;
     -webkit-box-shadow: 0 0 6px #1d7eb8;
     transition-duration: 0.5s;
@@ -149,10 +143,6 @@ body {
 
 .login_txtbx:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
     　　color: rgba(255, 255, 255, .9);
-}
-
-.login_txtbx::-moz-placeholder {
-    Mozilla Firefox 19 + 　　color: rgba(255, 255, 255, .9);
 }
 
 .login_txtbx:-ms-input-placeholder { /* Internet Explorer 10+ */
