@@ -18,9 +18,9 @@ RUN mkdir /data && mkdir /data/fortify && mkdir /data/fortify/report && chmod +x
 RUN chmod +x -R /opt/fortify_linux/ && ln -s /opt/fortify_linux/bin/sourceanalyzer /usr/local/bin/sourceanalyzer && ln -s /opt/fortify_linux/bin/ReportGenerator /usr/local/bin/ReportGenerator
 
 # sqlmap
-RUN mkdir /opt/taskid
-RUN cd /opt && git clone https://github.com/sqlmapproject/sqlmap
-RUN ln -s /opt/sqlmap/sqlmapapi.py /usr/bin/sqlmapapi &&  ln -s /opt/sqlmap/sqlmap.py /usr/bin/sqlmap
+#RUN mkdir /opt/taskid
+#RUN cd /opt && git clone https://github.com/sqlmapproject/sqlmap
+#RUN ln -s /opt/sqlmap/sqlmapapi.py /usr/bin/sqlmapapi &&  ln -s /opt/sqlmap/sqlmap.py /usr/bin/sqlmap
 
 # config.json
 COPY buoluo/config.json /opt/buoluo/buoluo/
