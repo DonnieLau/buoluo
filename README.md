@@ -17,8 +17,3 @@
 2. git_address：项目地址列表
 3. GIT_ADDRESS:模式2，接口地址
 4. GIT_PARM：模式2，json参数,例如{"giturl":[1,2,3,4]}
-- 禅道配置
-1. OPENEDBY：创建人ID
-2. PRODUCT_ID：项目的ID
-3. EMAIL_RECEIVERS：接受禅道提醒的邮箱
-- 邮箱配置(忽略)
