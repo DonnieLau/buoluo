@@ -1,5 +1,5 @@
 FROM centos:7
-#COPY fortify_linux /opt/fortify_linux
+COPY fortify_linux /opt/fortify_linux
 
 # info
 MAINTAINER Donnie Lau <doonie@163.com>
@@ -15,7 +15,7 @@ RUN cd /opt/buoluo && python3 manage.py makemigrations && python3 manage.py migr
 
 # 这个是fortify的运行程序
 RUN mkdir /data && mkdir /data/fortify && mkdir /data/fortify/report && chmod +x /data -R
-# RUN chmod +x -R /opt/fortify_linux/ && ln -s /opt/fortify_linux/bin/sourceanalyzer /usr/local/bin/sourceanalyzer && ln -s /opt/fortify_linux/bin/ReportGenerator /usr/local/bin/ReportGenerator
+RUN chmod +x -R /opt/fortify_linux/ && ln -s /opt/fortify_linux/bin/sourceanalyzer /usr/local/bin/sourceanalyzer && ln -s /opt/fortify_linux/bin/ReportGenerator /usr/local/bin/ReportGenerator
 
 # sqlmap
 RUN mkdir /opt/taskid
