@@ -286,7 +286,7 @@ $(function () {
                                 ' 漏洞标题： ' + list[i].rule_name +
                                 '</small>' +
                                 '</span>' +
-                                '</li>' + '<br>';
+                                '</li><br>';
                         }
                         if (list_html.length === 0) {
                             $(".vulnerabilities_list").html('<li><h3 style="text-align: center;margin: 200px auto;">"恭喜，暂时没有发现漏洞！")</h3></li>');
