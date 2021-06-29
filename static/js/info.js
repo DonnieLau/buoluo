@@ -286,10 +286,10 @@ $(function () {
                                 ' 漏洞标题： ' + list[i].rule_name +
                                 '</small>' +
                                 '</span>' +
-                                '</li>';
+                                '</li>' + '<br>';
                         }
                         if (list_html.length === 0) {
-                            $(".vulnerabilities_list").html('<li><h3 style="text-align: center;margin: 200px auto;">Wow, no vulnerability was detected :)</h3></li>');
+                            $(".vulnerabilities_list").html('<li><h3 style="text-align: center;margin: 200px auto;">"恭喜，暂时没有发现漏洞！")</h3></li>');
                         } else {
                             $('.vulnerabilities_list').html(list_html);
                         }

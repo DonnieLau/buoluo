@@ -2,10 +2,10 @@
 def information(title):
     infos = [
         {
-            'vul_title':'SQL Injection',
-            'describe':'''SQL注入就是通过把SQL命令插入到Web表单递交或输入域名或页面请求的查询字符串，最终达到欺骗服务器执行恶意的SQL命令。
+            'vul_title': 'SQL Injection',
+            'describe': '''SQL注入就是通过把SQL命令插入到Web表单递交或输入域名或页面请求的查询字符串，最终达到欺骗服务器执行恶意的SQL命令。
 具体来说，它是利用现有应用程序，将（恶意）的SQL命令注入到后台数据库引擎执行的能力，它可以通过在Web表单中输入（恶意）SQL语句得到一个存在安全漏洞的网站上的数据库，而不是按照设计者意图去执行SQL语句。''',
-            'Recommendation':'''参数化查询是指在设计与数据库链接并访问数据时，在需要填入数值或数据的地方，使用参数来给值，这个方法目前已被视为最有效可预防SQL注入攻击的攻击手法的防御方式。
+            'Recommendation': '''参数化查询是指在设计与数据库链接并访问数据时，在需要填入数值或数据的地方，使用参数来给值，这个方法目前已被视为最有效可预防SQL注入攻击的攻击手法的防御方式。
 在使用参数化查询的情况下，数据库服务器不会将参数的内容视为SQL指令的一部份来处理，而是在数据库完成 SQL 指令的编译后，才套用参数运行，因此就算参数中含有恶意的指令，由于已经编译完成，就不会被数据库所运行。
 有部份的开发人员可能会认为使用参数化查询，会让程序更不好维护，或者在实现部份功能上会非常不便，然而，使用参数化查询造成的额外开发成本，通常都远低于因为SQL注入攻击漏洞被发现而遭受攻击，所造成的重大损失。
         ''',
@@ -981,7 +981,7 @@ Employee Name: <%= name %>
             'Recommendation': '''
 
         ''',
-        },{
+        }, {
             'vul_title': 'Insecure Randomness',
             'describe': '''
 
@@ -1189,13 +1189,12 @@ Employee Name: <%= name %>
         ''',
         },
 
-
     ]
     for i in infos:
-        if i['vul_title']==title:
+        if i['vul_title'] == title:
             return i
-    data = {'vul_title':title,
-            'describe': '该漏洞详情和漏洞修复的方法还没添加，如果需要，请联系管理员添加，XXX@XXX.com',
+    data = {'vul_title': title,
+            'describe': '该漏洞详情和漏洞修复的方法还没添加，如果需要，请联系刘凌鹰添加',
             'Recommendation': '无',
             }
     return data

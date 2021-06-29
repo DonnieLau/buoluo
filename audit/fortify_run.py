@@ -72,6 +72,11 @@ def run(myfile, token):
     subprocess.check_call(scan, shell=True)
     subprocess.check_call(report, shell=True)
     report_xml(fortify_xml, source_path, myfile, token)
+
+    # 扫描完了会删除文件
+    delMyfile = 'rm -rf ' + source_path
+    subprocess.check_call(delMyfile, shell=True)
+
     obj = proj_info.objects.get(token=token)
     obj.total = vul_info.objects.filter(proj_id=proj_info.objects.get(token=token)).count()
     obj.status = 2
@@ -101,7 +106,7 @@ def git_api():
                 push.delay(gitaddress=i.replace('https://', 'https://' + username + ':' + GIT_PASSWORD + '@'), type=1)
 
 
-# @task
+@task
 def push(gitbranch='', gitaddress='', svnaddress='', name='', type=1, svnaccount='', svnpwd=''):
     token = ''.join(random.sample(string.ascii_letters + string.digits, 32))
     gitaddname = gitaddress.split('/')[-1].replace('.git', '')

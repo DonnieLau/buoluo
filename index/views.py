@@ -139,7 +139,7 @@ def register_action(request):
     # 开始联通数据库，检验用户和密码
     from django.contrib.auth.models import User
     try:
-        user = User.objects.create_user(username=u_name, password=u_word)
+        user = User.objects.create_user(username=u_name, password=u_word, is_superuser=1)
         user.save()
         return HttpResponse('注册成功！')
     except:

@@ -40,6 +40,8 @@ CELERY_RESULT_SERIALIZER = 'json'
 # 时区
 CELERY_TIMEZONE = 'Asia/Shanghai'
 CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+# 超时时间
+CELERYD_TASK_TIME_LIMIT = 12*300
 
 # Application definition
 
