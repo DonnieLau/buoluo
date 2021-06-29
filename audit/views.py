@@ -171,16 +171,17 @@ def scan(request):
             gitbranch = request.POST.get("git_branch")
             gitaccount = request.POST.get("git_username")
             gitpwd = request.POST.get("git_password")
-            if len(gitaddress.strip()) == 0 and len(gitbranch.strip()) == 0:
+            if len(gitaddress.strip()) == 0 or len(gitbranch.strip()) == 0:
                 return JsonResponse({"status": 0, "msg": "请输入地址和分支！"})
-            elif len(gitaccount.strip()) == 0 and len(gitpwd.strip()) == 0:
+            elif len(gitaccount.strip()) == 0 or len(gitpwd.strip()) == 0:
                 return JsonResponse({"status": 0, "msg": "请输入账号和密码！"})
             else:
                 gitaddname = gitaddress.replace('.git', '')
                 if "https://" in gitaddname:
                     tmp = "https://" + gitaccount.replace("@", "%40") + ":" + gitpwd + "@"
                     address = gitaddname.replace("https://", tmp)
-                    push.delay(gitaddress=address, gitbranch=gitbranch)
+                    # push.delay(gitaddress=address, gitbranch=gitbranch)
+                    push(gitaddress=address, gitbranch=gitbranch)
                     return JsonResponse({"code": 1000, "msg": "开始扫描"})
                 elif "http://" in gitaddname:
                     tmp = "http://" + gitaccount.replace("@", "%40") + ":" + gitpwd + "@"
@@ -188,7 +189,7 @@ def scan(request):
                     push.delay(gitaddress=address, gitbranch=gitbranch)
                     return JsonResponse({"code": 1000, "msg": "开始扫描"})
                 else:
-                    pass
+                    return JsonResponse({"status": 0, "msg": "信息有误！"})
         elif (t == "2"):
             git_api()
             return JsonResponse({"code": 1000, "msg": "开始扫描"})
@@ -197,14 +198,14 @@ def scan(request):
             svnaccount = request.POST.get("svn_username")
             svnpwd = request.POST.get("svn_password")
             push.delay(svnaddress=svnaddress, type=3, svnaccount=svnaccount, svnpwd=svnpwd)
-            return JsonResponse({"status": 0, "msg": "开始扫描!!!"})
+            return JsonResponse({"code": 1000, "msg": "开始扫描"})
         elif (t == "4"):
             myFile = request.FILES.get("file", None)
             name = myFile.name
             if not myFile:
-                return JsonResponse({"status": 0, "msg": "上传失败!!!"})
+                return JsonResponse({"status": 0, "msg": "上传失败！"})
             elif myFile.name.split('.')[-1] != 'zip':
-                return JsonResponse({"status": 2, "msg": "上传文件必须为ZIP!!!"})
+                return JsonResponse({"status": 2, "msg": "上传文件必须为ZIP！"})
             else:
                 destination = open(os.path.join("/data/fortify/", myFile.name), 'wb+')
                 for chunk in myFile.chunks():
@@ -212,7 +213,7 @@ def scan(request):
                 destination.close()
                 os.system("unzip -o  /data/fortify/" + myFile.name + "  -d  /data/fortify/")
                 push.delay(name=name.split('.')[0], type=4)
-                return JsonResponse({"status": 1, "msg": "上传成功!!!"})
+                return JsonResponse({"status": 1, "msg": "上传成功！"})
         else:
             return JsonResponse({"status": 0, "msg": "参数类型错误"})
     else:
@@ -243,10 +244,10 @@ def restart(request):
                 return JsonResponse({"code": 9999, "msg": "项目类型未知，无法重新扫描。"})
 
         except:
-            return JsonResponse({"code": 1000, "msg": "内容错误！！！"})
-        return JsonResponse({"code": 1001, "msg": "开始扫描!!!"})
+            return JsonResponse({"code": 1000, "msg": "内容错误！"})
+        return JsonResponse({"code": 1001, "msg": "开始扫描！"})
     else:
-        return JsonResponse({"code": 1111, "msg": "请求方式必须为POST!!!"})
+        return JsonResponse({"code": 1111, "msg": "请求方式必须为POST！"})
 
 
 @permission_required("audit.chandao_index")
