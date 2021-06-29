@@ -1,11 +1,11 @@
 {
   "setting": {
     "MYSQL": {
-      "MYSQL_HOST": "172.16.107.36",
+      "MYSQL_HOST": "172.16.98.186",
       "MYSQL_PORT": "3306",
       "MYSQL_DATABASE": "boluo",
       "MYSQL_USER": "root",
-      "MYSQL_PASSWORD": "20201116"
+      "MYSQL_PASSWORD": "Emotibot@1"
     },
     "SQLMAP": {
       "SQLMAP_LIMIT_RUN": 5,
