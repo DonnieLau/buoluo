@@ -171,17 +171,20 @@ def scan(request):
             gitbranch = request.POST.get("git_branch")
             gitaccount = request.POST.get("git_username")
             gitpwd = request.POST.get("git_password")
+            gitaddname = ''
             if len(gitaddress.strip()) == 0 or len(gitbranch.strip()) == 0:
                 return JsonResponse({"status": 0, "msg": "请输入地址和分支！"})
             elif len(gitaccount.strip()) == 0 or len(gitpwd.strip()) == 0:
                 return JsonResponse({"status": 0, "msg": "请输入账号和密码！"})
             else:
-                gitaddname = gitaddress.replace('.git', '')
+                if ('.git' in gitaddress):
+                    gitaddname = gitaddress.replace('.git', '')
+                else:
+                    gitaddress += '.git'
                 if "https://" in gitaddname:
                     tmp = "https://" + gitaccount.replace("@", "%40") + ":" + gitpwd + "@"
                     address = gitaddname.replace("https://", tmp)
-                    # push.delay(gitaddress=address, gitbranch=gitbranch)
-                    push(gitaddress=address, gitbranch=gitbranch)
+                    push.delay(gitaddress=address, gitbranch=gitbranch)
                     return JsonResponse({"code": 1000, "msg": "开始扫描"})
                 elif "http://" in gitaddname:
                     tmp = "http://" + gitaccount.replace("@", "%40") + ":" + gitpwd + "@"
