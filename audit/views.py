@@ -171,24 +171,22 @@ def scan(request):
             gitbranch = request.POST.get("git_branch")
             gitaccount = request.POST.get("git_username")
             gitpwd = request.POST.get("git_password")
-            gitaddname = ''
             if len(gitaddress.strip()) == 0 or len(gitbranch.strip()) == 0:
                 return JsonResponse({"status": 0, "msg": "请输入地址和分支！"})
             elif len(gitaccount.strip()) == 0 or len(gitpwd.strip()) == 0:
                 return JsonResponse({"status": 0, "msg": "请输入账号和密码！"})
             else:
-                if ('.git' in gitaddress):
-                    gitaddname = gitaddress.replace('.git', '')
-                else:
+                if ('.git' not in gitaddress):
                     gitaddress += '.git'
-                if "https://" in gitaddname:
+
+                if "https://" in gitaddress:
                     tmp = "https://" + gitaccount.replace("@", "%40") + ":" + gitpwd + "@"
-                    address = gitaddname.replace("https://", tmp)
+                    address = gitaddress.replace("https://", tmp)
                     push.delay(gitaddress=address, gitbranch=gitbranch)
                     return JsonResponse({"code": 1000, "msg": "开始扫描"})
-                elif "http://" in gitaddname:
+                elif "http://" in gitaddress:
                     tmp = "http://" + gitaccount.replace("@", "%40") + ":" + gitpwd + "@"
-                    address = gitaddname.replace('http://', tmp)
+                    address = gitaddress.replace('http://', tmp)
                     push.delay(gitaddress=address, gitbranch=gitbranch)
                     return JsonResponse({"code": 1000, "msg": "开始扫描"})
                 else:
