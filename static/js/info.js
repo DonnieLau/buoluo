@@ -253,7 +253,6 @@ $(function () {
                                 $('#search_level').val(sl);
                             }
                             // Search target
-
                         }
 
                         // vulnerabilities list
