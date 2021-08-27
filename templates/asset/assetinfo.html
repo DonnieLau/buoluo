@@ -14,9 +14,6 @@
     <script type="text/javascript" src="{% static "js/jquery.js" %}"></script>
     <script type="text/javascript" src={% static "lib/layui/layui.js" %} charset="utf-8"></script>
     <script type="text/javascript" src={% static "js/xadmin.js" %}></script>
-
- 
-
 </head>
 
 <body class="layui-anim layui-anim-up">
@@ -31,24 +28,22 @@
         <i class="layui-icon" style="line-height:30px">&#xe669;</i></a>
 </div>
 <div class="x-body">
-<div class="demoTable">
-  IP搜索：
-  <div class="layui-inline">
-    <input class="layui-input" name="id" id="demoReload" autocomplete="off">
-  </div>
-  <button class="layui-btn" data-type="reload">搜索</button>
-</div>
+    <div class="demoTable">
+        IP搜索：
+        <div class="layui-inline">
+            <input class="layui-input" name="id" id="demoReload" autocomplete="off">
+        </div>
+        <button class="layui-btn" data-type="reload">搜索</button>
+    </div>
 
 
     <table class="layui-hide" id="info" lay-filter="info"></table>
 
 
-
 </div>
 
 
-    <script type="text/javascript" src={% static "lib/layui/layui.js" %} charset="utf-8"></script>
-
+<script type="text/javascript" src={% static "lib/layui/layui.js" %} charset="utf-8"></script>
 
 
 <script>
@@ -60,7 +55,11 @@
             elem: '#info'
             , url: '{% url "asset_info_api" %}'
             , cols: [[
-                 {field: 'ip', title: 'IP地址', width: 170, fixed: 'left',sort: true, templet: function(d){return '<a href="{% url 'ip_info' %}?ip='+d.ip+'" class="layui-table-link">'+ d.ip +'</a>'}}
+                {
+                    field: 'ip', title: 'IP地址', width: 170, fixed: 'left', sort: true, templet: function (d) {
+                        return '<a href="{% url 'ip_info' %}?ip=' + d.ip + '" class="layui-table-link">' + d.ip + '</a>'
+                    }
+                }
                 , {field: 'opennum', title: '端口开放数目'}
                 , {field: 'vulnum', title: '漏洞数目'}
 
@@ -71,8 +70,6 @@
 
     });
 </script>
-
-
 
 
 </body>

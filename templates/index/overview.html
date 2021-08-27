@@ -14,7 +14,8 @@
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src={% static "lib/layui/layui.js" %} charset="utf-8"></script>
     <script type="text/javascript" src={% static "js/xadmin.js" %}></script>
-    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <script type="text/javascript" src={% static "js/jquery.js" %}></script>
+    <script type="text/javascript" src={% static "js/echarts.min.js" %}></script>
     <!--[if lt IE 9]>
     <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
     <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
@@ -39,17 +40,11 @@
             <div id="Vulnerability_trend" style="height:400px;"></div>
         </div>
         <div class="layui-col-xs4">
-            <div id="Vulnerability_type" style="height:400px;display: none"></div>
-        </div>
-        <div class="layui-col-xs4">
-            <div id="Vulnerability_trend" style="height:400px;display: none"></div>
+            <div id="Vulnerability_type" style="height:400px;display:none"></div>
         </div>
     </div>
 </div>
 
-
-<script src="{% static "js/jquery.js" %}"></script>
-<script src={% static "js/echarts.min.js" %}></script>
 
 <script>
     var date = []
@@ -101,7 +96,6 @@
                 name: '漏洞数目',
                 type: 'line',
                 data: total,
-
             }
         ]
     };

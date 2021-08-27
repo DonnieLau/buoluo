@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import JsonResponse, HttpResponseRedirect
 from django.http.response import HttpResponse
 from .models import *
-import time, datetime
+import datetime
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Count
 from django.db.models import Q
@@ -134,38 +134,11 @@ def api_proj_del(request):
         'msg': '删除成功'
     })
 
-
-@permission_required("audit.hidden_vul")
-@csrf_exempt
-def api_chandao_hidden(request):
-    if request.method == 'POST':
-        ids = request.POST.getlist('ids')
-        for id in ids:
-            try:
-                obj = chandao_data.objects.get(id=id)
-                obj.hidden = 1
-                obj.save()
-            except:
-                return JsonResponse({
-                    "code": 1002,
-                    "msg": "传入内容错误"
-                })
-        return JsonResponse({
-            'code': 1001,
-            'msg': '隐藏成功'
-        })
-    else:
-        return JsonResponse({
-            'code': 1000,
-            'msg': '必须使用POST方式'
-        })
-
-
 @csrf_exempt
 @permission_required('audit.upload_code_and_scan')
 def scan(request):
     if request.method == 'POST':
-        t = request.POST.get('type')  # 1为git,2为git-list,3为SVN,4为上传
+        t = request.POST.get('type')
         if (t == "1"):
             gitaddress = request.POST.get("git_address")
             gitbranch = request.POST.get("git_branch")
@@ -191,30 +164,6 @@ def scan(request):
                     return JsonResponse({"code": 1000, "msg": "开始扫描"})
                 else:
                     return JsonResponse({"status": 0, "msg": "信息有误！"})
-        elif (t == "2"):
-            git_api()
-            return JsonResponse({"code": 1000, "msg": "开始扫描"})
-        elif (t == "3"):
-            svnaddress = request.POST.get("svn_address")
-            svnaccount = request.POST.get("svn_username")
-            svnpwd = request.POST.get("svn_password")
-            push.delay(svnaddress=svnaddress, type=3, svnaccount=svnaccount, svnpwd=svnpwd)
-            return JsonResponse({"code": 1000, "msg": "开始扫描"})
-        elif (t == "4"):
-            myFile = request.FILES.get("file", None)
-            name = myFile.name
-            if not myFile:
-                return JsonResponse({"status": 0, "msg": "上传失败！"})
-            elif myFile.name.split('.')[-1] != 'zip':
-                return JsonResponse({"status": 2, "msg": "上传文件必须为ZIP！"})
-            else:
-                destination = open(os.path.join("/data/fortify/", myFile.name), 'wb+')
-                for chunk in myFile.chunks():
-                    destination.write(chunk)
-                destination.close()
-                os.system("unzip -o  /data/fortify/" + myFile.name + "  -d  /data/fortify/")
-                push.delay(name=name.split('.')[0], type=4)
-                return JsonResponse({"status": 1, "msg": "上传成功！"})
         else:
             return JsonResponse({"status": 0, "msg": "参数类型错误"})
     else:
@@ -249,31 +198,6 @@ def restart(request):
         return JsonResponse({"code": 1001, "msg": "开始扫描！"})
     else:
         return JsonResponse({"code": 1111, "msg": "请求方式必须为POST！"})
-
-
-@permission_required("audit.chandao_index")
-def chandao(request):
-    keyword = request.GET.get("keyword")
-    try:
-        page = int(request.GET.get("page")) or 1
-    except:
-        page = 1
-    try:
-        limit = int(request.GET.get("limit")) or 10
-    except:
-        limit = 10
-
-    start = (page - 1) * limit
-    end = page * limit
-    if keyword == None:
-        results = chandao_data.objects.all().exclude(hidden=1)[start:end]
-        vul_count = chandao_data.objects.all().exclude(hidden=1).count()
-
-    else:
-        results = chandao_data.objects.filter(vul_name__icontains=keyword).exclude(hidden=1)[start:end]
-        vul_count = chandao_data.objects.filter(vul_name__icontains=keyword).exclude(hidden=1).count()
-
-    return render(request, "audit/chandao.html", locals())
 
 
 @permission_required("audit.filter_vul")
@@ -311,70 +235,3 @@ def filter_vul(request):
             )
     return JsonResponse({"code": 1001, "msg": "过滤漏洞成功"})
 
-
-@permission_required("audit.send_vul")
-def send_chandao(request):
-    now_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    results = chandao_data.objects.all()
-    for i in results:
-        if i.status == 0:
-            if i.hidden == 0:
-                cinfo = chandao_person_info.objects.get(ename=i.proj_name)
-                title = i.proj_name.strip() + '_' + i.vul_name.strip()
-
-                # describe = cgi.escape(i.describe)
-                # Recommendation = cgi.escape(i.Recommendation)
-                project_id = cinfo.pid
-                header = cinfo.header
-                openedDate = now_time  # 创建时间
-                assignedDate = now_time  # 指派时间
-                contend = u'''
-                <p><strong><span style="color:#E53333;">漏洞MD5：</span>%s</strong></p><p><b>
-                <span style="color:#E53333;">产生漏洞的原因：</span>%s</b></p><p><b>
-                <span style="color:#E53333;">漏洞文件名：</span>%s</b></p><p><b>
-                <span style="color:#E53333;">漏洞位置：</span>%s</b></p><p><b>
-                <span style="color:#E53333;">漏洞影响行：</span>%s</b></p><p><b>
-                <span style="color:#E53333;">漏洞描述</span><span style="color:#E53333;">：</span></b></p>
-                <pre>%s</pre><div><b><br> </b></div><b>
-                <span style="color:#E53333;"></span><span style="color:#E53333;">
-                </span><span style="color:#E53333;">
-                </span><span style="color:#E53333;">
-                </span><span style="color:#E53333;">漏洞修复方式：</span></b><p><br></p><p>
-                <pre>%s</pre></p><p><br></p>
-                ''' % (i.md5, i.Abstract, i.FileName, i.FilePath, i.LineStart, i.describe, i.Recommendation)
-                conn = pymysql.connect(host=CHANDAO_MYSQL_HOST, user=CHANDAO_MYSQL_USER, passwd=CHANDAO_MYSQL_PASSWORD,
-                                       db=CHANDAO_MYSQL_DATABASE,
-                                       port=int(CHANDAO_MYSQL_PORT), charset="utf8")
-                cursor = conn.cursor()
-                sql = "SELECT * from zt_user where realname = '%s'" % header
-                cursor.execute(sql)
-                try:
-                    header = cursor.fetchall()[0][2]
-                except IndexError:
-                    pass
-                sql = "select id from zt_project where name='%s'" % i.proj_name
-                cursor.execute(sql)
-                # module =cursor.fetchall()[0][0]
-
-                # 插入禅道bug
-                sql = "INSERT INTO `zt_bug` SET `product` = % s,`module` = 0,`hardware` = '1',`lastEditedDate` = '2019-12-03 20:21:36'," \
-                      "`linkBug` = '1',`resolvedDate` = '2019-12-03 20:21:36',`deadline` = '2019-12-03 20:21:36',`activatedDate` = '2019-12-03 20:21:36',`activatedCount` = '0',`closedDate` = '2019-12-03 20:21:36'," \
-                      "`duplicateBug` = '0',`project` = % s,`openedBuild` = 'trunk',`assignedTo` = % s,`mailto` = '',`type` = 'security'," \
-                      "`os` = '',`browser` = '',`color` = '',`title` = % s,`severity` = '4',`pri` = '4',`steps` = % s,`story` = '0',`task` = '0'," \
-                      "`keywords` = '',`case` = '0',`caseVersion` = '0',`result` = '0',`testtask` = '0',`openedBy` = % s,`openedDate` = % s," \
-                      "`assignedDate` = % s;"
-                cursor.execute(sql, (
-                    str(PRODUCT_ID), str(project_id), header, title, contend, OPENEDBY, openedDate, assignedDate))
-                bug_id = int(conn.insert_id())  # 最新插入行的主键ID
-                conn.commit()
-                # 关联bug表的更新
-                sql2 = "INSERT INTO `zt_action` SET `objectType` = 'security',`objectID` = %s,`actor` = %s,`action` = 'opened'," \
-                       "`date` = '2019-12-03 20:21:36',`comment` = '',`extra` = '',`product` = ',1,',`project` = %s" % (
-                           bug_id, OPENEDBY, project_id)
-                cursor.execute(sql2)
-                conn.commit()
-                cursor.close()
-                i.status = 1
-                i.save()
-
-    return JsonResponse({"code": 1001, "msg": "发送成功"})

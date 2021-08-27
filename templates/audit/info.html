@@ -22,9 +22,9 @@
 <body class="layui-anim layui-anim-up">
 <div class="x-nav">
     <span class="layui-breadcrumb">
-          <a href="/">首页</a>
-          <a href="#">代码审计</a>
-          <a href="{% url "audit_display_project" %}">项目情况</a>
+          <a href="">首页</a>
+          <a href="">代码扫描</a>
+          <a href="{% url "audit_display_project" %}">服务情况</a>
           <a href="#">{{ proj.name }}项目</a>
     </span>
     <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
@@ -83,7 +83,7 @@
                             <div class="layui-card-header">高危漏洞分布</div>
                             <div id="vul_distributing" style="height:400px;"></div>
                         </div>
-                    </div><!-- End row -->
+                    </div>
                 </div>
                 <div class="tab-pane" id="vul">
                     <div class="row">

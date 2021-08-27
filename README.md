@@ -1,5 +1,5 @@
 ## 配置说明
-- mysql配置（忽略）
+- mysql配置
 - sqlmap配置
 1. SQLMAP_LIMIT_RUN，限制sqlmap跑的进程数
 2. SQLMAP_REQUESTFILE_PATH：保存数据包的位置

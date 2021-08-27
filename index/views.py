@@ -32,7 +32,6 @@ def overview(request):
                 totals.append(0)
         critical_title = vul_info.objects.filter(time__range=(time1, time2)).filter(
             Q(risk='Critical') | Q(risk='High')).values('title').annotate(Count('title'))
-
     elif t == "month":
         dates = []
         now = datetime.date.today()
@@ -120,9 +119,7 @@ def login(request):
     if request.method == 'POST':
         username = request.POST.get("username")
         password = request.POST.get("password")
-
         user = auth.authenticate(username=username, password=password)
-
         if user is not None:
             auth.login(request, user)
             return HttpResponseRedirect("/")
@@ -138,12 +135,15 @@ def register_action(request):
     u_word = request.GET['password']
     # 开始联通数据库，检验用户和密码
     from django.contrib.auth.models import User
-    try:
-        user = User.objects.create_user(username=u_name, password=u_word, is_superuser=1)
-        user.save()
-        return HttpResponse('注册成功！')
-    except:
-        return HttpResponse('注册失败！用户名已存在！')
+    if u_name and u_word:
+        try:
+            user = User.objects.create_user(username=u_name, password=u_word, is_superuser=1)
+            user.save()
+            return HttpResponse('注册成功！')
+        except:
+            return HttpResponse('注册失败！用户名已存在！')
+    else:
+        return HttpResponse('请输入用户名/密码！')
 
 
 @login_required

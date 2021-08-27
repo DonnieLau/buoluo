@@ -13,7 +13,6 @@ chaodao_receivers = EMAIL_RECEIVERS  # 接收邮件，可设置为你的QQ邮箱
 
 
 def send_sqlmap_email():
-
     html = """
     {% load static %}
 <!DOCTYPE html>
@@ -41,7 +40,6 @@ def send_sqlmap_email():
     smtpObj.sendmail(sender, sender, message.as_string())
 
 
-
 def send_chandao_email():
     now_time = datetime.datetime.now()
     now_time = str(now_time.strftime('%Y-%m-%d'))
@@ -56,9 +54,10 @@ def send_chandao_email():
      LEFT JOIN zt_project c on a.project = c.id
      WHERE a.status = 'active' and a.product = '%s' and a.openedDate  > '%s' GROUP BY a.project) as d on d.name = bb.name  
     group by bb.name
-        ''' % (PRODUCT_ID,now_time,PRODUCT_ID, now_time)
+        ''' % (PRODUCT_ID, now_time, PRODUCT_ID, now_time)
 
-    conn = pymysql.connect(host=CHANDAO_MYSQL_HOST, user=CHANDAO_MYSQL_USER, passwd=CHANDAO_MYSQL_PASSWORD, db=CHANDAO_MYSQL_DATABASE, port=CHANDAO_MYSQL_PORT,
+    conn = pymysql.connect(host=CHANDAO_MYSQL_HOST, user=CHANDAO_MYSQL_USER, passwd=CHANDAO_MYSQL_PASSWORD,
+                           db=CHANDAO_MYSQL_DATABASE, port=CHANDAO_MYSQL_PORT,
                            charset="utf8")
     cursor = conn.cursor()
     cursor.execute(sql)
@@ -70,7 +69,7 @@ def send_chandao_email():
             chandao_id = row[4].split(',')
             for id in chandao_id:
                 contend = contend + u'''<a href='{0}/bug-view-{1}.html'>{2}  </a>
-        '''.format(CHANDAO_ADDRESS,id, id)
+        '''.format(CHANDAO_ADDRESS, id, id)
         except AttributeError:
             pass
         td = td + u'''   
