@@ -11,5 +11,4 @@ urlpatterns = [
     path('api/restart', restart, name='audit_audit_restart'),
     path('api/vullist', vullist, name='audit_vul_list'),
     path('api/vuldetail', vuldetail, name='audit_vul_detail'),
-
 ]
