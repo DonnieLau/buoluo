@@ -134,6 +134,7 @@ def api_proj_del(request):
         'msg': '删除成功'
     })
 
+
 @csrf_exempt
 @permission_required('audit.upload_code_and_scan')
 def scan(request):
@@ -144,6 +145,9 @@ def scan(request):
             gitbranch = request.POST.get("git_branch")
             gitaccount = request.POST.get("git_username")
             gitpwd = request.POST.get("git_password")
+            if "@" in gitaccount:
+                atNum = gitaccount.find("@")
+                gitaccount = gitaccount[0:atNum]
             if len(gitaddress.strip()) == 0 or len(gitbranch.strip()) == 0:
                 return JsonResponse({"status": 0, "msg": "请输入地址和分支！"})
             elif len(gitaccount.strip()) == 0 or len(gitpwd.strip()) == 0:
@@ -234,4 +238,3 @@ def filter_vul(request):
                 proj_name=proj_name,
             )
     return JsonResponse({"code": 1001, "msg": "过滤漏洞成功"})
-

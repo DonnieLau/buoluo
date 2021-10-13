@@ -24,5 +24,6 @@ RUN chmod +x -R /opt/fortify_linux/ && ln -s /opt/fortify_linux/bin/sourceanalyz
 
 # config.json
 COPY buoluo/config.json /opt/buoluo/buoluo/
+COPY run.sh /opt/buoluo/
 
-#ENTRYPOINT redis-server & && cd /opt/ && python3 manage.py celery -A buoluo worker -l info --beat & && python3 manage.py runserver 0.0.0.0:8000
+#ENTRYPOINT redis-server & && cd /opt/buoluo && python3 manage.py celery -A buoluo worker -l info --beat & && python3 manage.py runserver 0.0.0.0:8000
