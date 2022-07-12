@@ -1171,12 +1171,13 @@ Employee Name: <%= name %>
         ''',
         },
         {
-            'vul_title': '',
+            'vul_title': 'Password Management: Empty Password in Configuration File',
             'describe': '''
-
+            一般是password明文展示有关，属于误报
         ''',
             'Recommendation': '''
-
+            建议将password等变量换一个变量取代，例如aa = password;
+            xxxx.xxxxx = aa
         ''',
         },
         {

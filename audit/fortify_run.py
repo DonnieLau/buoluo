@@ -107,7 +107,7 @@ def git_api():
 
 
 @task
-def push(gitbranch='', gitaddress='', svnaddress='', name='', type=1, svnaccount='', svnpwd=''):
+def push(gitbranch='', gitaddress='', name='', type=1):
     token = ''.join(random.sample(string.ascii_letters + string.digits, 32))
     gitaddname = gitaddress.split('/')[-1].replace('.git', '')
     myfile = gitaddname + '-' + gitbranch.replace('/', '-')
@@ -125,18 +125,5 @@ def push(gitbranch='', gitaddress='', svnaddress='', name='', type=1, svnaccount
     elif len(name) > 0:
         myfile = name
         proj_info.objects.create(name=name, token=token, type=type)
-    elif len(svnaddress) > 0:
-        myfile = svnaddress.split("/")[-1]
-        proj_info.objects.create(name=myfile, token=token, type=type, svn=svnaddress)
-        try:
-            if len(svnaccount) == 0 and len(svnpwd) == 0:
-                subprocess.check_call('svn checkout ' + svnaddress + ' --no-auth-cache ' + fortify_path + myfile,
-                                      shell=True)
-            else:
-                subprocess.check_call(
-                    'svn checkout ' + svnaddress + ' --username ' + svnaccount + ' --password ' + svnpwd + ' --no-auth-cache ' + fortify_path + myfile,
-                    shell=True)
-        except subprocess.CalledProcessError:
-            pass
 
     run(myfile, token)

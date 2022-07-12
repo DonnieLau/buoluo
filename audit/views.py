@@ -157,12 +157,12 @@ def scan(request):
                     gitaddress += '.git'
 
                 if "https://" in gitaddress:
-                    tmp = "https://" + gitaccount.replace("@", "%40") + ":" + gitpwd + "@"
+                    tmp = "https://" + gitaccount.replace("@", "%40") + ":" + gitpwd.replace("@", "%40") + "@"
                     address = gitaddress.replace("https://", tmp)
                     push.delay(gitaddress=address, gitbranch=gitbranch)
                     return JsonResponse({"code": 1000, "msg": "开始扫描"})
                 elif "http://" in gitaddress:
-                    tmp = "http://" + gitaccount.replace("@", "%40") + ":" + gitpwd + "@"
+                    tmp = "http://" + gitaccount.replace("@", "%40") + ":" + gitpwd.replace("@", "%40") + "@"
                     address = gitaddress.replace('http://', tmp)
                     push.delay(gitaddress=address, gitbranch=gitbranch)
                     return JsonResponse({"code": 1000, "msg": "开始扫描"})
